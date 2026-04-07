@@ -1,7 +1,7 @@
 {
   "buildCommand": "next build",
   "functions": {
-    "api/**/*.js": {
+    "app/api/**/route.js": {
       "maxDuration": 30
     }
   }
