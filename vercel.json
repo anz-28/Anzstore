@@ -1,0 +1,8 @@
+{
+  "buildCommand": "next build",
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 30
+    }
+  }
+}

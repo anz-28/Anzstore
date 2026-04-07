@@ -9,7 +9,7 @@ export async function GET(request) {
     const { getAllOrders } = require('@/lib/db');
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status') || 'all';
-    const orders = getAllOrders({ status });
+    const orders = await getAllOrders({ status });
     return NextResponse.json(orders);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch orders' }, { status: 500 });

@@ -9,8 +9,8 @@ export const metadata = {
 async function getProducts() {
   try {
     const { getAllProducts, getCategories } = require('@/lib/db');
-    const products = getAllProducts();
-    const categories = getCategories();
+    const products = await getAllProducts();
+    const categories = await getCategories();
     return { products, categories };
   } catch {
     return { products: [], categories: [] };

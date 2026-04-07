@@ -8,7 +8,7 @@ export async function GET(request, { params }) {
 
     const { getOrderById } = require('@/lib/db');
     const { id } = await params;
-    const order = getOrderById(id);
+    const order = await getOrderById(id);
     if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     return NextResponse.json(order);
   } catch (error) {
@@ -28,7 +28,7 @@ export async function PUT(request, { params }) {
     const { id } = await params;
     const body = await request.json();
     if (!body.status) return NextResponse.json({ error: 'Status is required' }, { status: 400 });
-    const order = updateOrderStatus(id, body.status);
+    const order = await updateOrderStatus(id, body.status);
     if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     return NextResponse.json(order);
   } catch (error) {

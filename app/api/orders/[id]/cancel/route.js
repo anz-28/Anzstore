@@ -12,14 +12,14 @@ export async function POST(request, { params }) {
     const { cancelOrder, getOrderById } = require('@/lib/db');
     const { id } = await params;
     
-    const order = getOrderById(id);
+    const order = await getOrderById(id);
     if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 });
     
     if (!['pending', 'processing'].includes(order.status)) {
       return NextResponse.json({ error: 'Order cannot be cancelled at this stage' }, { status: 400 });
     }
 
-    const cancelled = cancelOrder(id);
+    const cancelled = await cancelOrder(id);
     return NextResponse.json(cancelled);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to cancel order' }, { status: 500 });

@@ -5,7 +5,7 @@ export async function GET(request, { params }) {
   try {
     const { getProductById } = require('@/lib/db');
     const { id } = await params;
-    const product = getProductById(id);
+    const product = await getProductById(id);
     if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     return NextResponse.json(product);
   } catch (error) {
@@ -24,7 +24,7 @@ export async function PUT(request, { params }) {
     const { updateProduct } = require('@/lib/db');
     const { id } = await params;
     const body = await request.json();
-    const product = updateProduct(id, body);
+    const product = await updateProduct(id, body);
     if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     return NextResponse.json(product);
   } catch (error) {
@@ -42,7 +42,7 @@ export async function DELETE(request, { params }) {
 
     const { deleteProduct } = require('@/lib/db');
     const { id } = await params;
-    deleteProduct(id);
+    await deleteProduct(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to delete product' }, { status: 500 });

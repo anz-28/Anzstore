@@ -62,7 +62,7 @@ export async function POST(request) {
     const { getAdminByUsername } = require('@/lib/db');
     const bcrypt = require('bcryptjs');
 
-    const admin = getAdminByUsername(username);
+    const admin = await getAdminByUsername(username);
     if (!admin) {
       recordFailure(key);
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });

@@ -14,7 +14,7 @@ export async function POST(request) {
     let total = 0;
 
     for (const item of body.items) {
-      const product = getProductById(item.id);
+      const product = await getProductById(item.id);
       if (!product) {
         return NextResponse.json({ error: `Product ${item.id} not found` }, { status: 400 });
       }
@@ -51,7 +51,7 @@ export async function POST(request) {
         });
 
         // Create order in pending state
-        const order = createOrder({
+        const order = await createOrder({
           customer_name: 'Stripe Customer',
           customer_email: 'pending@checkout.com',
           total: Math.round(total * 100) / 100,
@@ -67,7 +67,7 @@ export async function POST(request) {
     }
 
     // Demo mode - create order directly
-    const order = createOrder({
+    const order = await createOrder({
       customer_name: 'Demo Customer',
       customer_email: 'demo@anzlab.com',
       total: Math.round(total * 100) / 100,

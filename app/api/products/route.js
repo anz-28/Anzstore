@@ -9,7 +9,7 @@ export async function GET(request) {
     const search = searchParams.get('search') || '';
     const featured = searchParams.get('featured') === 'true';
 
-    const products = getAllProducts({ category, search, featured });
+    const products = await getAllProducts({ category, search, featured });
     return NextResponse.json(products);
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
@@ -31,7 +31,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Name and price are required' }, { status: 400 });
     }
 
-    const product = createProduct({
+    const product = await createProduct({
       name: body.name,
       description: body.description || '',
       price: parseFloat(body.price),
