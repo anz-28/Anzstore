@@ -1,0 +1,140 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 11, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  height: 64px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.logoIcon {
+  color: var(--accent-primary);
+  filter: drop-shadow(0 0 6px var(--accent-glow));
+}
+
+.logoAccent {
+  color: var(--accent-primary);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.links a:hover {
+  color: var(--text-primary);
+}
+
+.links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  transition: width var(--transition-base);
+  border-radius: 1px;
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cartBtn {
+  position: relative;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.cartBtn:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.cartCount {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--accent-primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.menuBtn {
+  display: none;
+  padding: 8px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .links {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .links.open {
+    display: flex;
+  }
+
+  .links a {
+    font-size: 16px;
+  }
+
+  .menuBtn {
+    display: block;
+  }
+}
