@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { headers } from 'next/headers';
 import ProductsClient from './ProductsClient';
 
 export const dynamic = 'force-dynamic';
@@ -10,11 +11,21 @@ export const metadata = {
 
 async function getProducts() {
   try {
-    const { getAllProducts, getCategories } = require('@/lib/db');
-    const products = await getAllProducts();
-    const categories = await getCategories();
+    const h = await headers();
+    const host = h.get('host');
+    const proto = h.get('x-forwarded-proto') || 'https';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `${proto}://${host}`;
+
+    const productsRes = await fetch(`${baseUrl}/api/products`, { cache: 'no-store' });
+    if (!productsRes.ok) {
+      throw new Error(`Failed to fetch products: ${productsRes.status}`);
+    }
+
+    const products = await productsRes.json();
+    const categories = Array.from(new Set(products.map((p) => p.category))).sort();
     return { products, categories };
-  } catch {
+  } catch (error) {
+    console.error('Products page load failed:', error);
     return { products: [], categories: [] };
   }
 }
