@@ -3,16 +3,26 @@ import { requireAdmin, isSameOriginRequest } from '@/lib/security';
 
 export async function GET(request) {
   try {
+    console.log('[API/products] Database URL exists:', !!process.env.DATABASE_URL);
+    console.log('[API/products] Node env:', process.env.NODE_ENV);
+    
     const { getAllProducts } = require('@/lib/db');
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category') || 'all';
     const search = searchParams.get('search') || '';
     const featured = searchParams.get('featured') === 'true';
 
+    console.log('[API/products] Fetching products with filters:', { category, search, featured });
     const products = await getAllProducts({ category, search, featured });
+    console.log('[API/products] Successfully fetched', products.length, 'products');
     return NextResponse.json(products);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+    console.error('[API/products] Error:', error.message, error.stack);
+    return NextResponse.json({ 
+      error: 'Failed to fetch products',
+      details: error.message,
+      dbUrl: process.env.DATABASE_URL ? 'configured' : 'missing'
+    }, { status: 500 });
   }
 }
 
