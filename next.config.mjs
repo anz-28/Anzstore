@@ -3,7 +3,12 @@ const nextConfig = {
   serverExternalPackages: ['better-sqlite3'],
   devIndicators: false,
   images: {
-    domains: ['localhost'],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
   },
 };
 
