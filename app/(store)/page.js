@@ -1,5 +1,7 @@
 import HomePage from './HomeClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'ANZ LAB | Web Development Services',
   description: 'Custom web development services for startups, creators, and growing businesses.',

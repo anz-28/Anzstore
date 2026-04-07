@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 import ProductsClient from './ProductsClient';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Services | ANZ LAB',
   description: 'Browse our full catalog of web development services.',
